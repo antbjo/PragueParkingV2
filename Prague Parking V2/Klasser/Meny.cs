@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using PragueParkingData;
 
 namespace Prague_Parking_V2.Klasser
 {
@@ -17,8 +18,13 @@ namespace Prague_Parking_V2.Klasser
         {
             prislista.LäsPrislista();
             fil = new FileHandler();
-            config = fil.LäsConfig();
-            pHus = fil.LäsParkeringsHus();
+            config = fil.Läs<Config>("config.json");
+            if (config == null)
+            {
+                config = new Config();
+                fil.Spara(config, "config.json");
+            }
+            pHus = fil.Läs<Parkeringshus>("pHuset.json");
             if (pHus == null)
             {
                 pHus = new Parkeringshus();
@@ -94,7 +100,6 @@ namespace Prague_Parking_V2.Klasser
 
                 case "VISA PARKERINGSPLATSER":
                     pHus.VisaGaraget();
-                    //pHus.VisaParkeringsPlatser();
                     SkrivUtHuvudMeny();
                     break;
 
@@ -175,7 +180,7 @@ namespace Prague_Parking_V2.Klasser
             switch (menyVal)
             {
                 case "JA":
-                    fil.SparaParkeringsHus(pHus);
+                    fil.Spara(pHus, "pHuset.json");
                     Environment.Exit(0);
                     break;
 

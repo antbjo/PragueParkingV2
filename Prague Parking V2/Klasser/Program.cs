@@ -2,13 +2,12 @@
 using Spectre.Console;
 namespace Prague_Parking_V2.Klasser
 {
-    internal class PragueParkingMain
+    internal class Program
     {
         static void Main(string[] args)
         {
             Meny meny = new Meny();
             meny.SkrivUtHuvudMeny();
-
         }
     }
 }
